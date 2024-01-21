@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Status do Pedido</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 600px;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      margin: 0 10px;
+    }
+
+    h1 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .progress-bar {
+      background-color: #e0e0e0;
+      border-radius: 5px;
+      height: 20px;
+      width: 100%;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+
+    .progress {
+      width: 0%;
+      height: 100%;
+      background-color: #6ac0ff;
+      border-radius: 5px;
+      transition: width 0.5s ease-in-out;
+    }
+
+    p {
+      color: #555;
+      margin-top: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .icon {
+      margin-right: 10px;
+      font-size: 20px;
+    }
+
+    .date-container {
+      background-color: #f2f2f2;
+      border-radius: 5px;
+      padding: 5px 10px;
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .order-details {
+      text-align: left;
+      margin-bottom: 20px;
+    }
+
+    .chat-widget {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #6ac0ff;
+      color: #fff;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .chat-widget i {
+      margin: 0;
+    }
+
+    @media screen and (max-width: 600px) {
+      .container {
+        border-radius: 0;
+        box-shadow: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Status do Pedido</h1>
+    <div class="progress-bar">
+      <div class="progress"></div>
+    </div>
+    <div class="date-container" id="status-date"></div>
+    <div class="order-details">
+      <h3>Detalhes do Pedido:</h3>
+      <ul>
+        <li>Curso back-end em go</li>
+      </ul>
+    </div>
+    <p id="status-message">
+      <i class="fas fa-cart-arrow-down icon"></i>
+      Pedido em analise...
+    </p>
+  </div>
+
+  <!-- Widget do Chat -->
+  <div class="chat-widget">
+    <i class="fas fa-comment-alt"></i>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+  <script>
+    const progressBar = document.querySelector('.progress');
+    const statusMessage = document.getElementById('status-message');
+    const statusDate = document.getElementById('status-date');
+
+    function updateProgress(percentage, message, date) {
+      progressBar.style.width = percentage + '%';
+      // statusMessage.innerHTML = `<i class="fas fa-truck-moving icon"></i>${message}`;
+      statusDate.textContent = date;
+    }
+
+    function addLeadingZeros(number) {
+      return number < 10 ? `0${number}` : number;
+    }
+
+    function getCurrentDate() {
+      const currentDate = new Date();
+      const day = addLeadingZeros(currentDate.getDate());
+      const month = addLeadingZeros(currentDate.getMonth() + 1);
+      const year = currentDate.getFullYear();
+      const hours = addLeadingZeros(currentDate.getHours());
+      const minutes = addLeadingZeros(currentDate.getMinutes());
+      return `${hours}:${minutes} ${day}/${month}/${year}`;
+    }
+
+    setTimeout(() => {
+      updateProgress(25, 'Pedido em processamento...', getCurrentDate());
+      
+      // Simulando que o pedido saiu para entrega após 3 segundos
+      setTimeout(() => {
+        updateProgress(75, 'Pedido saiu para entrega!', getCurrentDate());
+      }, 3000);
+    }, 1500);
+  </script>
+</body>
+</html>
