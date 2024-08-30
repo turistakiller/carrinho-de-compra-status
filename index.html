@@ -1,182 +1,197 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Status do Pedido</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f5f5f5;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imports</title>
+    <style>
+        /* Reset básico */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    .container {
-      width: 90%;
-      max-width: 600px;
-      padding: 20px;
-      background-color: #fff;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      text-align: center;
-      margin: 0 10px;
-    }
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
 
-    h1 {
-      color: #333;
-      margin-bottom: 20px;
-    }
+        header {
+            background: #333;
+            color: #fff;
+            padding: 10px 0;
+            border-bottom: #ccc 1px solid;
+        }
 
-    .progress-bar {
-      background-color: #e0e0e0;
-      border-radius: 5px;
-      height: 20px;
-      width: 100%;
-      margin-bottom: 20px;
-      overflow: hidden;
-    }
+        header .container {
+            width: 90%;
+            margin: auto;
+            overflow: hidden;
+        }
 
-    .progress {
-      width: 0%;
-      height: 100%;
-      background-color: #6ac0ff;
-      border-radius: 5px;
-      transition: width 0.5s ease-in-out;
-    }
+        header h1 {
+            float: left;
+        }
 
-    p {
-      color: #555;
-      margin-top: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+        nav ul {
+            float: right;
+            list-style: none;
+        }
 
-    .icon {
-      margin-right: 10px;
-      font-size: 20px;
-    }
+        nav ul li {
+            display: inline;
+            margin-left: 10px;
+        }
 
-    .date-container {
-      background-color: #f2f2f2;
-      border-radius: 5px;
-      padding: 5px 10px;
-      font-size: 16px;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
 
-    .order-details {
-      text-align: left;
-    }
+        section {
+            padding: 20px 0;
+        }
 
-    .chat-widget {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background-color: #6ac0ff;
-      color: #fff;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 24px;
-      cursor: pointer;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
+        .product-grid {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
 
-    .chat-widget i {
-      margin: 0;
-    }
+        .product {
+            border: 1px solid #ddd;
+            padding: 10px;
+            width: 30%;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
 
-    .product-image {
-      width: 100%;
-      max-width: 250px;
-      margin: 0 auto;
-    }
+        .product img {
+            max-width: 100%;
+            height: auto;
+        }
 
-    .product-image img {
-      width: 100%;
-      border-radius: 5px;
-    }
+        button {
+            padding: 10px;
+            background: #333;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
 
-    @media screen and (max-width: 600px) {
-      .container {
-        border-radius: 0;
-        box-shadow: none;
-      }
-    }
-  </style>
+        button:hover {
+            background: #555;
+        }
+
+        #cart-items {
+            margin: 20px 0;
+        }
+
+        .cart-item {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        footer {
+            background: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        @media (max-width: 768px) {
+            .product-grid {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .product {
+                width: 90%;
+                margin-bottom: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Status do Pedido</h1>
-    <div class="progress-bar">
-      <div class="progress"></div>
-    </div>
-    <div class="date-container" id="status-date"></div>
-    <div class="order-details">
-      <h3>Detalhes do Pedido:</h3>
-      <ul>
-        <li>HUGO Slide Match com logo</li>
-      </ul>
-    </div>
-    <div class="product-image">
-      <img src="https://cdn-images.farfetch-contents.com/20/41/82/06/20418206_50841266_1000.jpg" alt="Chinelo Hugo Boss">
-    </div>
-    <p id="status-message">
-      <i class="fas fa-cart-arrow-down icon"></i>
-      Pedido em analise...
-    </p>
-  </div>
+    <!-- Cabeçalho -->
+    <header>
+        <div class="container">
+            <h1>Imports Óculos</h1>
+            <nav>
+                <ul>
+                    <li><a href="#home">Início</a></li>
+                    <li><a href="#products">Produtos</a></li>
+                    <li><a href="#cart">Carrinho</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-  <!-- Widget do Chat -->
-  <div class="chat-widget">
-    <i class="fas fa-comment-alt"></i>
-  </div>
+    <!-- Seção de Produtos -->
+    <section id="products" class="container">
+        <h2>Produtos</h2>
+        <div class="product-grid">
+            <!-- Produto 1 -->
+            <div class="product">
+                <img src="https://d13p5wuxy0ioj8.cloudfront.net/Custom/Content/Products/11/35/1135299_oculos-de-grau-giorgio-armani-0ar7125-5622-52par20629_l1_637830373234366771.jpg" alt="Óculos 1">
+                <h3>Armação Giorgio Armani Tartaruga(Replica)1</h3>
+                <p>R$ 230,00</p>
+                <button onclick="addToCart('Óculos Estilo 1', 299)">Adicionar ao Carrinho</button>
+            </div>
+            <!-- Produto 2 -->
+            <div class="product">
+                <img src="https://www.envyotica.com.br/media/product/3c5/giorgio-armani-7160-5026-oculos-de-grau-b94.jpg" alt="Óculos 2">
+                <h3>Armação Giorgio Armani Tartaruga(Replica)2</h3>
+                <p>R$ 230,00</p>
+                <button onclick="addToCart('Óculos Estilo 2', 399)">Adicionar ao Carrinho</button>
+            </div>
+            <!-- Mais produtos podem ser adicionados aqui -->
+        </div>
+    </section>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
-  <script>
-    const progressBar = document.querySelector('.progress');
-    const statusMessage = document.getElementById('status-message');
-    const statusDate = document.getElementById('status-date');
+    <!-- Seção do Carrinho -->
+    <section id="cart" class="container">
+        <h2>Carrinho de Compras</h2>
+        <div id="cart-items">
+            <!-- Itens do carrinho serão adicionados aqui via JavaScript -->
+        </div>
+        <p id="total-price">Total: R$ 0,00</p>
+    </section>
 
-    function updateProgress(percentage, message, date) {
-      progressBar.style.width = percentage + '%';
-      // statusMessage.innerHTML = `<i class="fas fa-truck-moving icon"></i>${message}`;
-      statusDate.textContent = date;
-    }
+    <!-- Rodapé -->
+    <footer>
+        <p>&copy; 2024 Loja de Óculos. Todos os direitos reservados.</p>
+    </footer>
 
-    function addLeadingZeros(number) {
-      return number < 10 ? `0${number}` : number;
-    }
+    <!-- Script JavaScript -->
+    <script>
+        let cart = [];
+        const cartItems = document.getElementById('cart-items');
+        const totalPrice = document.getElementById('total-price');
 
-    function getCurrentDate() {
-      const currentDate = new Date();
-      const day = addLeadingZeros(currentDate.getDate());
-      const month = addLeadingZeros(currentDate.getMonth() + 1);
-      const year = currentDate.getFullYear();
-      const hours = addLeadingZeros(currentDate.getHours());
-      const minutes = addLeadingZeros(currentDate.getMinutes());
-      return `${hours}:${minutes} ${day}/${month}/${year}`;
-    }
+        function addToCart(name, price) {
+            cart.push({ name, price });
+            updateCart();
+        }
 
-    setTimeout(() => {
-      updateProgress(25, 'Pedido em processamento...', getCurrentDate());
-      
-      // Simulando que o pedido saiu para entrega após 3 segundos
-      setTimeout(() => {
-        updateProgress(75, 'Pedido saiu para entrega!', getCurrentDate());
-      }, 3000);
-    }, 1500);
-  </script>
+        function updateCart() {
+            cartItems.innerHTML = '';
+            let total = 0;
+
+            cart.forEach(item => {
+                const itemElement = document.createElement('div');
+                itemElement.className = 'cart-item';
+                itemElement.textContent = `${item.name} - R$ ${item.price.toFixed(2)}`;
+                cartItems.appendChild(itemElement);
+                total += item.price;
+            });
+
+            totalPrice.textContent = `Total: R$ ${total.toFixed(2)}`;
+        }
+    </script>
 </body>
 </html>
