@@ -172,6 +172,7 @@
         let cart = [];
         const cartItems = document.getElementById('cart-items');
         const totalPrice = document.getElementById('total-price');
+        const shippingCost = 30.00; // Defina o valor do frete
 
         function addToCart(name, price) {
             cart.push({ name, price });
@@ -190,7 +191,8 @@
                 total += item.price;
             });
 
-            totalPrice.textContent = `Total: R$ ${total.toFixed(2)}`;
+            total += shippingCost; // Adiciona o valor do frete ao total
+            totalPrice.textContent = `Total: R$ ${total.toFixed(2)} (inclui R$ ${shippingCost.toFixed(2)} de frete)`;
         }
     </script>
 </body>
