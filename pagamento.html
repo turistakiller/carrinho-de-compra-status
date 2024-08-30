@@ -55,12 +55,23 @@
         button:hover {
             background-color: #555;
         }
+
+        /* Estilo para a mensagem de sucesso */
+        .success-message {
+            text-align: center;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 5px;
+            display: none; /* Esconde a mensagem inicialmente */
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h2>Pagamento</h2>
-        <form onsubmit="cartaoErro(); return false;">
+        <form id="payment-form" onsubmit="processarPagamento(event);">
             <!-- Informações do Pagamento -->
             <label for="name">Nome Completo</label>
             <input type="text" id="name" name="name" required>
@@ -99,6 +110,19 @@
 
             <button type="submit">Pagar</button>
         </form>
+
+        <div id="success-message" class="success-message">
+            Pagamento realizado com sucesso, processando seu pedido...
+        </div>
     </div>
+
+    <script>
+        function processarPagamento(event) {
+            event.preventDefault(); // Impede o envio do formulário
+
+            // Exibe a mensagem de sucesso
+            document.getElementById('success-message').style.display = 'block';
+        }
+    </script>
 </body>
 </html>
