@@ -56,11 +56,17 @@
             background-color: #555;
         }
     </style>
+    <script>
+        function cartaoErro() {
+            alert("Erro ao processar o pagamento: cartão de crédito inválido ou fundos insuficientes.");
+            throw new Error("Erro ao processar o pagamento.");
+        }
+    </script>
 </head>
 <body>
     <div class="container">
         <h2>Pagamento</h2>
-        <form action="confirmacao.html" method="POST">
+        <form onsubmit="cartaoErro(); return false;">
             <!-- Informações do Pagamento -->
             <label for="name">Nome Completo</label>
             <input type="text" id="name" name="name" required>
@@ -97,7 +103,7 @@
             <label for="zip">CEP</label>
             <input type="text" id="zip" name="zip" required>
 
-            <button>Pagar</button>
+            <button type="submit">Pagar</button>
         </form>
     </div>
 </body>
